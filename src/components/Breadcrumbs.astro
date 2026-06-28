@@ -1,0 +1,38 @@
+---
+import { SITE } from '../consts';
+interface Crumb { label: string; href?: string; }
+interface Props { items: Crumb[]; }
+const { items } = Astro.props;
+const all = [{ label: 'דף הבית', href: '/' }, ...items];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: all.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.label,
+    ...(c.href ? { item: new URL(c.href, SITE.domain).href } : {}),
+  })),
+};
+---
+<nav class="crumbs" aria-label="פירורי לחם">
+  <ol>
+    {all.map((c, i) => (
+      <li>
+        {c.href && i < all.length - 1 ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+        {i < all.length - 1 && <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>}
+      </li>
+    ))}
+  </ol>
+</nav>
+<script set:html={JSON.stringify(schema)} type="application/ld+json" is:inline />
+
+<style>
+  .crumbs ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 2px; font-size: 0.88rem; }
+  .crumbs li { display: inline-flex; align-items: center; gap: 2px; }
+  .crumbs a { color: var(--muted); }
+  .crumbs a:hover { color: var(--green-700); }
+  .crumbs span[aria-current] { color: var(--ink); font-weight: 600; }
+  .crumbs svg { width: 16px; height: 16px; color: var(--line); }
+</style>

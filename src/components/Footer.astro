@@ -1,0 +1,85 @@
+---
+import { SITE, MAIN_NAV } from '../consts';
+const year = new Date().getFullYear();
+const keys = MAIN_NAV.find((n) => n.label.includes('שכפול'))?.children?.slice(0, 8) ?? [];
+const services = MAIN_NAV.find((n) => n.label.includes('שירותי'))?.children?.slice(0, 8) ?? [];
+const areas = MAIN_NAV.find((n) => n.label.includes('אזורי'))?.children ?? [];
+---
+<footer class="footer">
+  <div class="footer__cta">
+    <div class="container footer__cta-inner">
+      <div>
+        <h2>צריכים מנעולן עכשיו? אנחנו כבר בדרך אליכם</h2>
+        <p>שירות מקצועי, אמין וזמין בכל שעה - בפריסה ארצית. {SITE.hours}.</p>
+      </div>
+      <a href={`tel:${SITE.phoneMobileIntl}`} class="btn btn--primary btn--lg">חייגו עכשיו · {SITE.phoneMobile}</a>
+    </div>
+  </div>
+
+  <div class="container footer__grid">
+    <div class="footer__col footer__about">
+      <a href="/" class="footer__brand">
+        <img src="/wp-content/uploads/2023/09/cropped-cropped-cropped-KEY4ME-2.png" alt={SITE.name} width="160" height="58" loading="lazy" />
+      </a>
+      <p>{SITE.description}</p>
+      <div class="footer__contact">
+        <a href={`tel:${SITE.phoneMobileIntl}`}>📞 {SITE.phoneMobile}</a>
+        <a href={`tel:${SITE.phoneLandlineIntl}`}>☎️ {SITE.phoneLandline}</a>
+        <span>🕒 {SITE.hours}</span>
+      </div>
+    </div>
+
+    <div class="footer__col">
+      <h3>שכפול מפתחות</h3>
+      <ul>{keys.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul>
+    </div>
+    <div class="footer__col">
+      <h3>שירותי מנעולן</h3>
+      <ul>{services.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul>
+    </div>
+    <div class="footer__col">
+      <h3>אזורי שירות</h3>
+      <ul>{areas.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul>
+    </div>
+  </div>
+
+  <div class="footer__bar">
+    <div class="container footer__bar-inner">
+      <p>© {year} {SITE.name} ({SITE.nameEn}) · כל הזכויות שמורות</p>
+      <nav class="footer__mini" aria-label="קישורים נוספים">
+        <a href="/אודות-2/">אודות</a>
+        <a href="/בלוג/">בלוג</a>
+        <a href="/לקוחות-ממליצים/">לקוחות ממליצים</a>
+        <a href="/צרו-קשר/">צרו קשר</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--navy-900); color: #c5d3e3; margin-top: auto; }
+  .footer__cta { background: linear-gradient(135deg, var(--navy-700), var(--navy-800)); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .footer__cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 36px; flex-wrap: wrap; }
+  .footer__cta h2 { color: #fff; font-size: clamp(1.3rem, 2.6vw, 1.8rem); }
+  .footer__cta p { color: #b9c9da; margin-top: 8px; }
+
+  .footer__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 36px; padding-block: 56px; }
+  .footer__brand img { height: 60px; width: auto; margin-bottom: 16px; background: #fff; padding: 6px; border-radius: 12px; }
+  .footer__about p { font-size: 0.95rem; line-height: 1.7; color: #a9bacd; }
+  .footer__contact { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; font-size: 0.96rem; }
+  .footer__contact a, .footer__contact span { color: #d6e2f0; }
+  .footer__contact a:hover { color: #fff; }
+  .footer__col h3 { color: #fff; font-size: 1.05rem; margin-bottom: 16px; }
+  .footer__col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  .footer__col ul a { color: #a9bacd; font-size: 0.94rem; }
+  .footer__col ul a:hover { color: var(--green-500); }
+
+  .footer__bar { border-top: 1px solid rgba(255,255,255,0.08); }
+  .footer__bar-inner { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding-block: 20px; flex-wrap: wrap; font-size: 0.88rem; color: #8da0b5; }
+  .footer__mini { display: flex; gap: 18px; flex-wrap: wrap; }
+  .footer__mini a { color: #a9bacd; }
+  .footer__mini a:hover { color: #fff; }
+
+  @media (max-width: 900px) { .footer__grid { grid-template-columns: 1fr 1fr; gap: 30px; } }
+  @media (max-width: 560px) { .footer__grid { grid-template-columns: 1fr; } .footer__cta-inner { flex-direction: column; align-items: flex-start; } }
+</style>

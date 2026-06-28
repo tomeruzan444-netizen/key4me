@@ -1,0 +1,40 @@
+---
+import ContentLayout from '../layouts/ContentLayout.astro';
+import type { PageData } from '../data/pages/_type';
+import { getSidebarBlocks } from '../data/groups';
+
+const modules = import.meta.glob('../data/pages/*.ts', { eager: true });
+
+export function getStaticPaths() {
+  const mods = import.meta.glob('../data/pages/*.ts', { eager: true });
+  return Object.values(mods)
+    .map((m: any) => m.page as PageData | undefined)
+    .filter((p): p is PageData => !!p)
+    .map((p) => ({ params: { slug: p.slug.replace(/^\/+|\/+$/g, '') }, props: { page: p } }));
+}
+
+const { page } = Astro.props as { page: PageData };
+
+// All pages, used to build the dynamic group sidebar for this page.
+const allPages = Object.values(modules)
+  .map((m: any) => m.page as PageData | undefined)
+  .filter((p): p is PageData => !!p)
+  .map((p) => ({ slug: p.slug, h1: p.h1 }));
+const navGroups = getSidebarBlocks(page.slug, allPages);
+---
+<ContentLayout
+  metaTitle={page.metaTitle}
+  metaDesc={page.metaDesc}
+  canonical={page.canonical}
+  h1={page.h1}
+  content={page.content}
+  sidebar={page.sidebar}
+  breadcrumbs={page.breadcrumbs}
+  heroImage={page.heroImage}
+  heroAlt={page.heroAlt}
+  kind={page.kind}
+  date={page.date}
+  modified={page.modified}
+  noindex={page.noindex}
+  navGroups={navGroups}
+/>

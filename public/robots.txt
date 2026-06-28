@@ -1,0 +1,5 @@
+# Local staging build — NOT indexed.
+# When going live: replace this file with the production version that Allows crawling
+# (and set SITE.indexable = true in src/consts.ts).
+User-agent: *
+Disallow: /

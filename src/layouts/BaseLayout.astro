@@ -1,0 +1,176 @@
+---
+import { SITE } from '../consts';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FloatingContact from '../components/FloatingContact.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;       // full URL; defaults to current path on the real domain
+  ogImage?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  jsonLd?: object | object[]; // extra page-level structured data
+}
+
+const {
+  title,
+  description = SITE.description,
+  canonical,
+  ogImage = `${SITE.domain}/wp-content/uploads/2025/05/newkeybannerimg-1.webp`,
+  type = 'website',
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, SITE.domain).href;
+
+// Sitewide LocalBusiness (Locksmith) - strong signal for Google & AI engines.
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Locksmith',
+  '@id': `${SITE.domain}/#business`,
+  name: SITE.name,
+  alternateName: SITE.nameEn,
+  url: SITE.domain,
+  image: ogImage,
+  description: SITE.description,
+  telephone: SITE.phoneMobileIntl,
+  priceRange: '₪₪',
+  areaServed: { '@type': 'Country', name: SITE.areaServed },
+  address: { '@type': 'PostalAddress', addressCountry: 'IL' },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    opens: '00:00', closes: '23:59',
+  },
+  sameAs: [`https://wa.me/${SITE.whatsapp}`],
+};
+
+const extra = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+const schemas = [businessSchema, ...extra];
+---
+<!doctype html>
+<html lang="he" dir="rtl" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {(noindex || !SITE.indexable) && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#15314f" />
+    <meta name="format-detection" content="telephone=yes" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="he_IL" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style"
+      href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&family=Rubik:wght@500;600;700;800&display=swap" />
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&family=Rubik:wght@500;600;700;800&display=swap" />
+
+    <link rel="icon" href="/wp-content/uploads/2023/09/cropped-cropped-cropped-KEY4ME-2.png" />
+    <link rel="apple-touch-icon" href="/wp-content/uploads/2023/09/cropped-cropped-cropped-KEY4ME-2.png" />
+
+    <script set:html={JSON.stringify(schemas)} type="application/ld+json" is:inline />
+    <script is:inline>document.documentElement.classList.remove('no-js');</script>
+  </head>
+  <body>
+    <a href="#main" class="sr-only">דלג לתוכן</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <FloatingContact />
+
+    <script is:inline>
+      // Reveal-on-scroll (progressive enhancement)
+      const io = 'IntersectionObserver' in window
+        ? new IntersectionObserver((entries) => {
+            entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+          }, { rootMargin: '0px 0px -8% 0px' })
+        : null;
+      document.querySelectorAll('.reveal').forEach((el) => io ? io.observe(el) : el.classList.add('in'));
+    </script>
+
+    <script is:inline>
+      // Wire arrow buttons for migrated QuadLayers carousels (qw-carousel).
+      document.querySelectorAll('.qw-grid-display').forEach((box) => {
+        const track = box.querySelector('.qw-carousel.slick-carousel');
+        if (!track) return;
+        const next = box.querySelector('.qw-next');
+        const prev = box.querySelector('.qw-prev');
+        const step = () => Math.max(track.clientWidth * 0.8, 200);
+        // RTL: "next" advances toward later slides (negative scrollLeft).
+        if (next) next.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+        if (prev) prev.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+      });
+    </script>
+
+    <script is:inline>
+      // Interactive price quiz engine.
+      (function () {
+        var PRICES = {
+          dup_reg_no: 450, dup_reg_yes: 650, dup_smart_no: 900, dup_smart_yes: 1200,
+          rec_reg_no: 800, rec_reg_yes: 1000, rec_smart_no: 900, rec_smart_yes: 1600,
+        };
+        var REGION = { center: 0, north: 80, south: 80 };
+        document.querySelectorAll('[data-kfm-quiz]').forEach(function (quiz) {
+          var ans = {};
+          var steps = quiz.querySelectorAll('.kfm-quiz__step');
+          var total = steps.length;
+          var body = quiz.querySelector('.kfm-quiz__body');
+          var bar = quiz.querySelector('.kfm-quiz__bar-fill');
+          var counter = quiz.querySelector('[data-quiz-step]');
+          var result = quiz.querySelector('.kfm-quiz__result');
+          var priceEl = quiz.querySelector('[data-quiz-price]');
+          var back = quiz.querySelector('[data-quiz-back]');
+          var cur = 1;
+          function show(n) {
+            steps.forEach(function (s) { s.hidden = +s.getAttribute('data-step') !== n; });
+            result.hidden = true; body.hidden = false;
+            if (bar) bar.style.width = (n / total * 100) + '%';
+            if (counter) counter.textContent = n;
+            if (back) back.hidden = n === 1;
+            cur = n;
+          }
+          function finish() {
+            var base = PRICES[ans.service + '_' + ans.key + '_' + ans.german];
+            if (base == null) base = 900;
+            var est = base + (REGION[ans.region] || 0);
+            priceEl.textContent = '₪' + est.toLocaleString('he-IL') + ' - ₪' + (est + 150).toLocaleString('he-IL');
+            body.hidden = true; if (bar) bar.style.width = '100%';
+            result.hidden = false; if (back) back.hidden = true;
+          }
+          quiz.querySelectorAll('.kfm-quiz__opt').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              ans[btn.getAttribute('data-q')] = btn.getAttribute('data-v');
+              if (cur < total) show(cur + 1); else finish();
+            });
+          });
+          if (back) back.addEventListener('click', function () { if (cur > 1) show(cur - 1); });
+          var rb = quiz.querySelector('[data-quiz-restart]');
+          if (rb) rb.addEventListener('click', function () { ans = {}; show(1); });
+          show(1);
+        });
+      })();
+    </script>
+  </body>
+</html>

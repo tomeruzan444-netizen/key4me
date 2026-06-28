@@ -1,0 +1,130 @@
+---
+import { SITE, SERVICE_OPTIONS } from '../consts';
+interface Props { variant?: 'hero' | 'panel' | 'bar' | 'grid'; title?: string; subtitle?: string; }
+const { variant = 'hero', title = 'זקוקים למנעולן? פנו אלינו עכשיו!', subtitle } = Astro.props;
+const isBar = variant === 'bar';
+const isGrid = variant === 'grid';
+const showHead = !isBar && !isGrid;
+---
+
+<form class={`lead-form lead-form--${variant}`} data-lead-form aria-label="טופס יצירת קשר">
+  {showHead && (
+    <div class="lead-form__head">
+      <span class="lead-form__badge">24/7 · שירות חירום</span>
+      <h2 class="lead-form__title">{title}</h2>
+      {subtitle && <p class="lead-form__sub">{subtitle}</p>}
+    </div>
+  )}
+
+  {isBar && (
+    <div class="lead-form__barhead">
+      <strong>{title}</strong>
+      <span>{subtitle ?? 'נחזור אליכם תוך דקות'}</span>
+    </div>
+  )}
+
+  <div class="lead-form__fields">
+    <label class="lead-field">
+      <span class="sr-only">שם מלא</span>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.7"/><path d="M5 19c.6-3.2 3.4-5 7-5s6.4 1.8 7 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      <input type="text" name="name" placeholder="שם מלא" autocomplete="name" required />
+    </label>
+
+    <label class="lead-field">
+      <span class="sr-only">טלפון נייד</span>
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.6 15.6 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.3 1l-2.1 2.3Z"/></svg>
+      <input type="tel" name="phone" placeholder="טלפון נייד" autocomplete="tel" inputmode="tel" pattern="[0-9\-\+ ]{7,}" required />
+    </label>
+
+    {(isGrid || variant === 'panel') && (
+      <label class="lead-field">
+        <span class="sr-only">עיר</span>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-6.3-7-11a7 7 0 1 1 14 0c0 4.7-7 11-7 11Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.7"/></svg>
+        <input type="text" name="city" placeholder="עיר" autocomplete="address-level2" />
+      </label>
+    )}
+
+    <label class="lead-field lead-field--select">
+      <span class="sr-only">סוג שירות</span>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.5 4.5a4 4 0 0 1-5 5L4 15v3h3l5.5-5.5a4 4 0 0 0 5-5l-2.2 2.2-1.8-.4-.4-1.8 2.2-2.2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      <select name="service" required>
+        <option value="" disabled selected>בחרו סוג שירות</option>
+        {SERVICE_OPTIONS.map((o) => <option value={o}>{o}</option>)}
+      </select>
+      <svg class="lead-field__caret" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </label>
+
+    <button type="submit" class={`btn btn--primary btn--lg lead-form__submit${isGrid ? ' lead-form__submit--full' : ''}`}>{isBar ? 'שליחה' : 'שליחה'}</button>
+  </div>
+
+  {showHead && <p class="lead-form__note">או חייגו ישירות: <a href={`tel:${SITE.phoneMobileIntl}`}>{SITE.phoneMobile}</a></p>}
+</form>
+
+<style>
+  .lead-form { display: flex; flex-direction: column; gap: 12px; }
+  .lead-form__fields { display: flex; flex-direction: column; gap: 12px; }
+  .lead-form--hero { background: linear-gradient(160deg, #fff, #f3f7fb); color: var(--ink); padding: 26px; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+  .lead-form--panel { background: #fff; padding: 26px; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--line); }
+  .lead-form__head { text-align: center; margin-bottom: 6px; }
+  .lead-form__badge { display: inline-block; background: var(--green-600); color: #fff; font-family: var(--h-font); font-weight: 700; font-size: 0.8rem; padding: 5px 14px; border-radius: 999px; margin-bottom: 12px; letter-spacing: 0.03em; }
+  .lead-form__title { font-size: 1.4rem; line-height: 1.25; color: var(--navy-800); }
+  .lead-form__sub { font-size: 0.95rem; color: var(--ink-soft); margin-top: 8px; }
+
+  /* Grid variant - 2×2 fields floating over the hero image */
+  .lead-form--grid .lead-form__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .lead-form--grid .lead-form__submit--full { grid-column: 1 / -1; width: 100%; margin-top: 2px; box-shadow: 0 10px 26px rgba(22,163,74,0.4); font-size: 1.2rem; padding: 18px; }
+
+  /* Horizontal bar variant */
+  .lead-form--bar { background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); border: 1px solid var(--line); padding: 20px 24px; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 12px 24px; }
+  .lead-form--bar .lead-form__barhead { display: flex; flex-direction: column; line-height: 1.3; }
+  .lead-form--bar .lead-form__barhead strong { font-family: var(--h-font); font-size: 1.18rem; color: var(--navy-800); }
+  .lead-form--bar .lead-form__barhead span { font-size: 0.9rem; color: var(--green-700); font-weight: 600; }
+  .lead-form--bar .lead-form__fields { flex-direction: row; gap: 12px; }
+  .lead-form--bar .lead-field { flex: 1; }
+  .lead-form--bar .lead-form__submit { flex-shrink: 0; }
+
+  .lead-field { position: relative; display: flex; align-items: center; }
+  .lead-field > svg:not(.lead-field__caret) { position: absolute; inset-inline-start: 14px; width: 19px; height: 19px; color: var(--muted); pointer-events: none; }
+  .lead-field input, .lead-field select {
+    width: 100%; background: #fff; border: 1.5px solid var(--line); border-radius: var(--radius-sm);
+    padding: 15px 44px 15px 16px; font-size: 1rem; color: var(--ink); outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s; appearance: none;
+  }
+  .lead-form--panel .lead-field input, .lead-form--panel .lead-field select { background: var(--bg-soft); }
+  .lead-field input::placeholder { color: #8a98ab; }
+  .lead-field input:focus, .lead-field select:focus { border-color: var(--green-500); background: #fff; box-shadow: 0 0 0 3px rgba(34,197,94,0.18); }
+  .lead-field select { cursor: pointer; }
+  .lead-field select:invalid { color: #8a98ab; }
+  .lead-field__caret { position: absolute; inset-inline-end: 14px; width: 18px; height: 18px; color: var(--muted); pointer-events: none; }
+  .lead-form__submit { margin-top: 4px; }
+  .lead-form--bar .lead-form__submit { margin-top: 0; }
+  .lead-form__note { text-align: center; font-size: 0.92rem; color: var(--ink-soft); }
+  .lead-form__note a { color: var(--green-700); font-weight: 700; }
+
+  @media (max-width: 900px) {
+    .lead-form--bar { grid-template-columns: 1fr; gap: 14px; text-align: center; }
+    .lead-form--bar .lead-form__barhead { align-items: center; }
+    .lead-form--bar .lead-form__fields { flex-direction: column; }
+  }
+  @media (max-width: 520px) {
+    .lead-form--grid .lead-form__fields { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script is:inline define:vars={{ wa: SITE.whatsapp }}>
+  document.querySelectorAll('[data-lead-form]').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const f = new FormData(form);
+      const get = (k) => (f.get(k) || '').toString().trim();
+      const lines = [
+        `שלום, אשמח לקבל שירות מקי פור מי.`,
+        `שם: ${get('name')}`,
+        `טלפון: ${get('phone')}`,
+      ];
+      if (get('city')) lines.push(`עיר: ${get('city')}`);
+      lines.push(`סוג שירות: ${get('service')}`);
+      window.open(`https://wa.me/${wa}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
+    });
+  });
+</script>

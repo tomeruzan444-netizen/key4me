@@ -1,0 +1,350 @@
+/* ===========================================================================
+   קי פור מי - Global design system
+   RTL-first, Hebrew, fast. Brand: deep navy + emerald green (from reference).
+   =========================================================================== */
+
+:root {
+  /* Brand palette */
+  --navy-900: #0f2540;
+  --navy-800: #15314f;
+  --navy-700: #1e3a5f;
+  --navy-600: #284a73;
+  --green-600: #16a34a;
+  --green-700: #15803d;
+  --green-500: #22c55e;
+  --green-50: #e8f5e9;
+
+  --ink: #1a2433;
+  --ink-soft: #46566b;
+  --muted: #6b7a90;
+  --line: #e4e9f0;
+  --bg: #ffffff;
+  --bg-soft: #f5f7fa;
+  --bg-softer: #eef2f7;
+  --white: #ffffff;
+  --amber: #f59e0b;
+  --star: #fbbf24;
+
+  /* Typography */
+  --font: 'Assistant', 'Rubik', -apple-system, 'Segoe UI', system-ui, sans-serif;
+  --h-font: 'Rubik', 'Assistant', system-ui, sans-serif;
+
+  /* Layout */
+  --container: 1200px;
+  --radius: 14px;
+  --radius-sm: 9px;
+  --radius-lg: 22px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(15, 37, 64, 0.08), 0 1px 2px rgba(15, 37, 64, 0.04);
+  --shadow: 0 8px 24px rgba(15, 37, 64, 0.1);
+  --shadow-lg: 0 18px 50px rgba(15, 37, 64, 0.16);
+  --shadow-green: 0 10px 26px rgba(22, 163, 74, 0.32);
+
+  --header-h: 116px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+* { margin: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+/* Safety net: never allow horizontal page scrolling on mobile. On html this
+   clips stray overflow without breaking the sticky header (which sticks to the
+   html scrollport). */
+html { overflow-x: hidden; }
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.75;
+  font-size: 17px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+img, picture, video, canvas, svg { display: block; max-width: 100%; height: auto; }
+input, button, textarea, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+a { color: var(--green-700); text-decoration: none; transition: color 0.16s; }
+a:hover { color: var(--green-600); }
+
+h1, h2, h3, h4 {
+  font-family: var(--h-font);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--navy-800);
+  letter-spacing: -0.01em;
+}
+h1 { font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 800; }
+h2 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); }
+h3 { font-size: clamp(1.2rem, 2.4vw, 1.5rem); }
+
+/* ---------- Layout helpers ---------- */
+.container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: 20px; }
+.section { padding-block: clamp(48px, 7vw, 88px); }
+.section--soft { background: #fff; }
+.section-head { text-align: center; max-width: 720px; margin-inline: auto; margin-bottom: 44px; }
+.section-head p { color: var(--ink-soft); font-size: 1.08rem; margin-top: 12px; }
+.eyebrow {
+  display: inline-block; font-family: var(--h-font); font-weight: 700; font-size: 0.86rem;
+  color: var(--green-700); background: var(--green-50); padding: 6px 16px; border-radius: 999px;
+  margin-bottom: 16px; letter-spacing: 0.02em;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: var(--h-font); font-weight: 700; font-size: 1.02rem;
+  padding: 14px 28px; border-radius: var(--radius-sm); border: 2px solid transparent;
+  transition: transform 0.16s var(--ease), box-shadow 0.16s, background 0.16s, color 0.16s;
+  white-space: nowrap; line-height: 1;
+}
+.btn svg { width: 1.15em; height: 1.15em; }
+.btn--primary { background: var(--green-600); color: #fff; box-shadow: var(--shadow-green); }
+.btn--primary:hover { background: var(--green-700); color: #fff; transform: translateY(-2px); }
+.btn--ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.55); }
+.btn--ghost:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
+.btn--navy { background: var(--navy-800); color: #fff; }
+.btn--navy:hover { background: var(--navy-700); color: #fff; transform: translateY(-2px); }
+.btn--block { width: 100%; }
+.btn--lg { padding: 17px 34px; font-size: 1.1rem; }
+
+/* ---------- Prose (page content) ---------- */
+.prose { font-size: 1.06rem; color: var(--ink-soft); line-height: 1.85; }
+.prose > * + * { margin-top: 1.1em; }
+.prose h2 { margin-top: 1.7em; margin-bottom: 0.2em; color: var(--navy-800); }
+.prose h3 { margin-top: 1.4em; margin-bottom: 0.2em; color: var(--navy-700); }
+.prose h2 span[style*="color"] { color: var(--green-700) !important; }
+.prose p { margin: 0; }
+.prose a { color: var(--green-700); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.prose a:hover { color: var(--green-600); }
+.prose ul, .prose ol { padding-inline-start: 1.4em; }
+.prose li { margin-block: 0.45em; }
+.prose ul li::marker { color: var(--green-600); }
+.prose img { border-radius: var(--radius); margin-block: 1.4em; box-shadow: var(--shadow-sm); }
+.prose strong { color: var(--ink); font-weight: 700; }
+.prose blockquote {
+  border-inline-start: 4px solid var(--green-600); background: var(--bg-soft);
+  padding: 16px 22px; border-radius: var(--radius-sm); font-style: italic;
+}
+
+/* Tables (pricing tables are core content) */
+.prose .table-scroll {
+  max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  margin-block: 1.6em; border-radius: var(--radius); box-shadow: var(--shadow-sm);
+}
+.prose table {
+  width: 100%; border-collapse: collapse; font-size: 0.98rem; background: #fff;
+}
+.prose .table-scroll table { margin: 0; }
+
+/* FAQ accordion (migrated .faq-widget → native <details>) */
+.prose .faq-widget { display: flex; flex-direction: column; gap: 12px; margin: 1.6em 0; }
+.prose details.faq-item {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; transition: box-shadow 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.prose details.faq-item[open] { box-shadow: var(--shadow); border-color: transparent; }
+.prose summary.faq-question {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  cursor: pointer; list-style: none; padding: 16px 20px;
+  font-family: var(--h-font); font-weight: 700; font-size: 1.05rem; color: var(--navy-800);
+}
+.prose summary.faq-question::-webkit-details-marker { display: none; }
+.prose summary.faq-question:hover { color: var(--green-700); }
+.prose .faq-ico { width: 22px; height: 22px; color: var(--green-600); flex-shrink: 0; transition: transform 0.25s var(--ease); }
+.prose details.faq-item[open] .faq-ico { transform: rotate(180deg); }
+.prose .faq-answer { padding: 0 20px 18px; color: var(--ink-soft); line-height: 1.8; }
+.prose .faq-answer p { margin: 0; }
+.prose .faq-answer p + p { margin-top: 0.7em; }
+
+/* Interactive price quiz (rebuilt from the migrated .quiz-container) */
+.kfm-quiz {
+  margin: 1.8em 0; padding: clamp(20px, 4vw, 32px);
+  background: linear-gradient(165deg, #fff, var(--bg-soft));
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow); text-align: center;
+}
+.kfm-quiz__badge { display: inline-block; background: var(--green-600); color: #fff; font-family: var(--h-font); font-weight: 700; font-size: 0.78rem; padding: 5px 14px; border-radius: 999px; letter-spacing: 0.02em; }
+.kfm-quiz__title { margin: 14px 0 18px; font-size: clamp(1.2rem, 3.4vw, 1.55rem); color: var(--navy-800); }
+.kfm-quiz__bar { height: 8px; background: var(--bg-softer); border-radius: 999px; overflow: hidden; max-width: 420px; margin: 0 auto; }
+.kfm-quiz__bar-fill { display: block; height: 100%; background: linear-gradient(90deg, var(--green-600), var(--green-500, #22c55e)); border-radius: 999px; transition: width 0.35s var(--ease); }
+.kfm-quiz__count { font-size: 0.86rem; color: var(--ink-soft); margin: 10px 0 0; font-weight: 600; }
+.kfm-quiz__body { margin-top: 22px; }
+.kfm-quiz__q { font-family: var(--h-font); font-weight: 700; font-size: 1.18rem; color: var(--navy-800); margin: 0 0 18px; }
+.kfm-quiz__opts { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.kfm-quiz__opt {
+  flex: 0 1 auto; min-width: 150px; padding: 15px 26px;
+  font-family: var(--h-font); font-weight: 700; font-size: 1.05rem; cursor: pointer;
+  background: #fff; color: var(--navy-800); border: 2px solid var(--line); border-radius: var(--radius);
+  transition: transform 0.15s var(--ease), border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+.kfm-quiz__opt:hover { border-color: var(--green-600); background: var(--green-600); color: #fff; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(22,163,74,0.28); }
+.kfm-quiz__back { margin-top: 18px; background: none; border: 0; color: var(--ink-soft); font-family: var(--h-font); font-weight: 600; font-size: 0.95rem; cursor: pointer; }
+.kfm-quiz__back:hover { color: var(--green-700); }
+
+/* Result */
+.kfm-quiz__result-label { display: block; font-family: var(--h-font); font-weight: 700; color: var(--ink-soft); font-size: 0.95rem; }
+.kfm-quiz__price { font-family: var(--h-font); font-weight: 800; font-size: clamp(2rem, 7vw, 2.8rem); color: var(--green-700); margin: 8px 0 4px; }
+.kfm-quiz__note { color: var(--ink-soft); font-size: 0.95rem; max-width: 480px; margin: 8px auto 18px; line-height: 1.7; }
+.kfm-quiz__cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.kfm-quiz__restart { margin-top: 16px; background: none; border: 0; color: var(--ink-soft); font-weight: 600; cursor: pointer; font-size: 0.92rem; }
+.kfm-quiz__restart:hover { color: var(--green-700); }
+
+/* Table of contents (auto-generated, collapsible, collapsed by default) */
+.toc { margin: 0 0 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: #fff; box-shadow: var(--shadow-sm); }
+.toc__summary { display: flex; align-items: center; gap: 12px; cursor: pointer; list-style: none; padding: 13px 16px; }
+.toc__summary::-webkit-details-marker { display: none; }
+.toc__summary:hover .toc__label { color: var(--green-700); }
+.toc__icon { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 10px; background: var(--green-50); color: var(--green-700); flex-shrink: 0; }
+.toc__icon svg { width: 18px; height: 18px; }
+.toc__label { font-family: var(--h-font); font-weight: 700; font-size: 1.05rem; color: var(--navy-800); transition: color 0.15s; }
+.toc__count { font-size: 0.8rem; color: var(--ink-soft); background: var(--bg-soft); padding: 3px 11px; border-radius: 999px; font-weight: 600; }
+.toc__chev { width: 20px; height: 20px; color: var(--muted); margin-inline-start: auto; flex-shrink: 0; transition: transform 0.25s var(--ease); }
+.toc[open] .toc__chev { transform: rotate(180deg); }
+.toc[open] .toc__summary { border-bottom: 1px solid var(--line); }
+.toc__nav { padding: 12px 16px 14px; }
+.toc__nav ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; columns: 2; column-gap: 26px; }
+.toc__item { break-inside: avoid; }
+.toc__item a { display: flex; align-items: baseline; gap: 10px; padding: 6px 8px; border-radius: 8px; color: var(--ink-soft); font-size: 0.95rem; line-height: 1.45; text-decoration: none; transition: background 0.14s, color 0.14s; }
+.toc__item a::before { counter-increment: toc; content: counter(toc); font-family: var(--h-font); font-weight: 700; font-size: 0.74rem; color: var(--green-700); background: var(--green-50); min-width: 21px; height: 21px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; flex-shrink: 0; }
+.toc__item a:hover { background: var(--green-50); color: var(--green-700); }
+.toc__item--h3 a { font-size: 0.89rem; padding-inline-start: 22px; }
+.toc__item--h3 a::before { background: transparent; color: var(--muted); font-weight: 600; }
+@media (max-width: 600px) { .toc__nav ol { columns: 1; } }
+.prose th {
+  background: var(--green-600); color: #fff; text-align: right; padding: 13px 16px; font-weight: 700;
+  font-family: var(--h-font);
+}
+.prose td { padding: 12px 16px; border-top: 1px solid var(--line); }
+.prose tbody tr:nth-child(even) { background: var(--bg-soft); }
+.prose tbody tr:hover { background: var(--green-50); }
+
+/* Content callout boxes that come inline from the original HTML */
+.prose div[style*="background-color: #e8f5e9"],
+.prose div[style*="background-color:#e8f5e9"] {
+  border-radius: var(--radius) !important; border-inline-start: 4px solid var(--green-600) !important;
+}
+
+/* ---------- Utilities ---------- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.stars { color: var(--star); letter-spacing: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Reveal-on-scroll (progressive enhancement; visible without JS) */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+.no-js .reveal { opacity: 1; transform: none; }
+
+/* ---------------------------------------------------------------------------
+   Migrated QuadLayers carousels (qw-carousel). The plugin's CSS/JS was stripped
+   during migration, so its absolutely-positioned images collapsed. These rules
+   re-render every carousel as a clean horizontal, swipeable slider.
+   Two variants: brand-logo grid (.qw-grid-item) and overlay cards (.qw-overlay-wrap).
+--------------------------------------------------------------------------- */
+.qw-carousel.slick-carousel {
+  display: flex !important;
+  gap: 14px;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 6px 6px 14px;
+  margin: 4px 0 8px;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 6px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--green-600) var(--bg-softer);
+  /* Soft-fade the scroll edges so partially-scrolled cards never look "cut". */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 46px, #000 calc(100% - 46px), transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 46px, #000 calc(100% - 46px), transparent 100%);
+}
+.qw-carousel.slick-carousel::-webkit-scrollbar { height: 8px; }
+.qw-carousel.slick-carousel::-webkit-scrollbar-track { background: var(--bg-softer); border-radius: 20px; }
+.qw-carousel.slick-carousel::-webkit-scrollbar-thumb { background: #c4cfdc; border-radius: 20px; }
+/* Every direct slide keeps its size and never shrinks. */
+.qw-carousel.slick-carousel > * { flex: 0 0 auto !important; scroll-snap-align: start; }
+
+/* Variant A - brand-logo grid: clean wrapping grid (no scroll, nothing cropped). */
+.qw-carousel.slick-carousel:has(.qw-grid-item) {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  gap: 12px !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  margin: 10px 0 18px !important;
+  -webkit-mask-image: none !important;
+          mask-image: none !important;
+  scroll-snap-type: none !important;
+}
+.qw-carousel.slick-carousel:has(.qw-grid-item) > .qw-grid-item { width: auto !important; }
+/* No scroll arrows needed for the static grid. */
+.qw-grid-display:has(.qw-grid-item) .qw-arrows { display: none !important; }
+.qw-grid-item { width: 142px !important; margin: 0 !important; }
+.qw-grid-item .image-wrapper {
+  position: relative !important;
+  width: 100%; height: 90px;
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 14px; overflow: hidden;
+  transition: box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.qw-grid-item a:hover .image-wrapper { box-shadow: var(--shadow); transform: translateY(-3px); }
+.qw-grid-item .image-wrapper img { width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center !important; padding: 12px; box-sizing: border-box; border-radius: 14px !important; }
+.qw-grid-item .qw-image-title { margin-top: 8px; text-align: center; font-family: var(--h-font); font-weight: 700; font-size: 0.95rem; color: var(--navy-800); }
+
+/* Variant B - overlay cards */
+.qw-overlay-wrap { width: 250px !important; position: relative; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm); }
+.qw-overlay-wrap .thumb img { width: 100% !important; height: 160px !important; object-fit: cover !important; display: block; border-radius: 14px; }
+.qw-overlay-wrap .overlay-content { position: absolute; inset: auto 0 0 0; padding: 12px 14px; background: linear-gradient(transparent, rgba(8,20,36,0.82)); }
+.qw-overlay-wrap .overlay-content h3 { color: #fff; margin: 0; font-size: 0.98rem; line-height: 1.35; }
+
+/* Arrow buttons (markup already present with inline styles; wired by JS) */
+.qw-arrows { display: flex; justify-content: center; gap: 16px; margin-top: 16px; }
+.qw-arrows button { transition: background 0.2s, color 0.2s; }
+.qw-arrows button:hover { background: var(--green-600) !important; }
+.qw-arrows button:hover svg path { stroke: #fff !important; }
+
+/* Tablet */
+@media (max-width: 768px) {
+  .qw-grid-item { width: 128px !important; }
+  .qw-grid-item .image-wrapper { height: 82px; }
+  .qw-overlay-wrap { width: 220px !important; }
+  .qw-overlay-wrap .thumb img { height: 150px !important; }
+}
+/* Phone */
+@media (max-width: 600px) {
+  .qw-carousel.slick-carousel { gap: 10px; padding: 6px 4px 12px; }
+  .qw-grid-item { width: 112px !important; }
+  .qw-grid-item .image-wrapper { height: 74px; border-radius: 12px; }
+  .qw-grid-item .image-wrapper img { padding: 10px; }
+  .qw-grid-item .qw-image-title { font-size: 0.84rem; margin-top: 6px; }
+  .qw-overlay-wrap { width: 200px !important; }
+  .qw-overlay-wrap .thumb img { height: 132px !important; }
+  .qw-overlay-wrap .overlay-content h3 { font-size: 0.9rem; }
+  /* Keep nav arrows comfortably tappable on touch. */
+  .qw-arrows button { width: 44px !important; height: 44px !important; }
+}
+/* Small phone */
+@media (max-width: 380px) {
+  .qw-grid-item { width: 100px !important; }
+  .qw-grid-item .image-wrapper { height: 66px; }
+}
