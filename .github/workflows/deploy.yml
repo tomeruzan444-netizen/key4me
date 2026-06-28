@@ -34,3 +34,7 @@ jobs:
           protocol: ftps
           local-dir: ./dist/
           server-dir: ${{ secrets.FTP_SERVER_DIR || '/public_html/' }}
+          # FIRST DEPLOY ONLY: wipe the target (removes old WordPress files) before
+          # uploading the new site. Remove this line after the first successful run
+          # so subsequent deploys are fast/incremental.
+          dangerous-clean-slate: true
