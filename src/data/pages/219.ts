@@ -186,7 +186,7 @@ export const page: PageData = {
 <li style="text-align: right;">חיתוך המפתח</li>
 <li style="text-align: right;">קידוד המפתח</li>
 </ul>
-<p style="text-align: right;"><a href="tel:+972545418449"><br>
+<p style="text-align: right;"><a href="tel:+97235560638"><br>
 </a>כבר איבדת את המפתח שלך, אל תהסס, תנו לנו לקחת פיקוד מכאן.</p>
 <p> </p>
 <div data-wpr-lazyrender="1">

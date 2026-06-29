@@ -252,6 +252,6 @@ export const page: PageData = {
 <p style="text-align: left;">satisfaction is unwavering. We strive to not only meet but exceed your expectations with every service call. Whether it's a simple lock installation or a complex security system upgrade, we ensure that the job is done right the first time</p>
 <p> </p>
 <h2 style="text-align: left;">Contact KEY4ME Today</h2>
-<p style="text-align: left;">When it comes to locksmith services in Tel Aviv, KEY4ME is your trusted partner. Our team of expert locksmiths, comprehensive services, and commitment to your safety make us the top choice for all your lock and key needs. Contact us today at 054-541-8449 for prompt and reliable locksmith services in Tel Aviv. Your security is our priority, and we're here to unlock peace of mind for you.</p>
+<p style="text-align: left;">When it comes to locksmith services in Tel Aviv, KEY4ME is your trusted partner. Our team of expert locksmiths, comprehensive services, and commitment to your safety make us the top choice for all your lock and key needs. Contact us today at 03-556-0638 for prompt and reliable locksmith services in Tel Aviv. Your security is our priority, and we're here to unlock peace of mind for you.</p>
 <p style="text-align: left;">Choose KEY4ME - Your Key to Security in Tel Aviv</p>`,
 };

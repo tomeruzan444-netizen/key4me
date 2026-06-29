@@ -55,6 +55,6 @@ export const page: PageData = {
 <p>Don't let a broken car key ruin your day! At Key4Me, we lovingly repair your car keys with a personal touch. Our friendly technicians treat each key like their own, fixing everything from stubborn buttons to finicky chips. We'll come right to you, saving you time and money while delivering that warm, reliable service you deserve. Trust us to get your key working perfectly again!</p>
 <p> </p>
 <h2>Contact KEY4ME car key locksmith Today!</h2>
-<p>keys in Israel, KEY4ME is your trusted partner. Our commitment to your satisfaction and safety, along with our comprehensive range of services, sets us apart as the premier choice for all your automotive key needs. Contact us today at 054-541-8449 for prompt and reliable automotive key services anywhere in Israel. We're here to ensure your keys never become a roadblock to your journey.<br>
+<p>keys in Israel, KEY4ME is your trusted partner. Our commitment to your satisfaction and safety, along with our comprehensive range of services, sets us apart as the premier choice for all your automotive key needs. Contact us today at 03-556-0638 for prompt and reliable automotive key services anywhere in Israel. We're here to ensure your keys never become a roadblock to your journey.<br>
 Choose KEY4ME - Your Key to Automotive Key Solutions in Israel!</p>`,
 };

@@ -7,18 +7,17 @@ export const SITE = {
   name: 'קי פור מי',
   nameEn: 'KEY4ME',
   domain: 'https://www.keyforme.co.il',
-  // ⚠️ Local staging: keep false so the site is NOT indexed.
-  // Flip to true (and update robots.txt) when going live.
-  indexable: false,
+  // Live: site is indexable by search engines.
+  indexable: true,
   tagline: 'מנעולן בית ומנעולן רכב בפריסה ארצית',
   description:
     'קי פור מי - חברת מנעולנות המספקת שירותי מנעולן בית ורכב בפריסה ארצית: שכפול ושחזור מפתחות לרכב, פריצת מנעולים, קידוד שלטים, התקנת דלתות ועוד. שירות אמין, מקצועי וזמין 24/7.',
   // Contact
-  phoneMobile: '054-541-8449',
-  phoneMobileIntl: '+972545418449',
+  phoneMobile: '03-556-0638',
+  phoneMobileIntl: '+97235560638',
   phoneLandline: '03-556-0638',
   phoneLandlineIntl: '+97235560638',
-  whatsapp: '972545418449',
+  whatsapp: '97235560638',
   email: 'info@keyforme.co.il',
   hours: 'זמינים 24 שעות ביממה, 7 ימים בשבוע',
   areaServed: 'ישראל',

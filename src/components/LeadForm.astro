@@ -7,7 +7,12 @@ const isGrid = variant === 'grid';
 const showHead = !isBar && !isGrid;
 ---
 
-<form class={`lead-form lead-form--${variant}`} data-lead-form aria-label="טופס יצירת קשר">
+<form class={`lead-form lead-form--${variant}`} action="https://formsubmit.co/ben3n4456@gmail.com" method="POST" aria-label="טופס יצירת קשר">
+  <input type="hidden" name="_subject" value="פנייה חדשה מהאתר - קי פור מי" />
+  <input type="hidden" name="_template" value="table" />
+  <input type="hidden" name="_captcha" value="false" />
+  <input type="hidden" name="_next" value="https://www.keyforme.co.il/תודה-שהשארתם-פרטים-מיד-נחזור-אליכם/" />
+  <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
   {showHead && (
     <div class="lead-form__head">
       <span class="lead-form__badge">24/7 · שירות חירום</span>
@@ -111,20 +116,3 @@ const showHead = !isBar && !isGrid;
   }
 </style>
 
-<script is:inline define:vars={{ wa: SITE.whatsapp }}>
-  document.querySelectorAll('[data-lead-form]').forEach((form) => {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const f = new FormData(form);
-      const get = (k) => (f.get(k) || '').toString().trim();
-      const lines = [
-        `שלום, אשמח לקבל שירות מקי פור מי.`,
-        `שם: ${get('name')}`,
-        `טלפון: ${get('phone')}`,
-      ];
-      if (get('city')) lines.push(`עיר: ${get('city')}`);
-      lines.push(`סוג שירות: ${get('service')}`);
-      window.open(`https://wa.me/${wa}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
-    });
-  });
-</script>

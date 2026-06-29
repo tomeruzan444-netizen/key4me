@@ -39,7 +39,7 @@ export const page: PageData = {
 <li>חיתוך המפתח</li>
 <li>קידוד המפתח לרכב</li>
 </ul>
-<p><a class="cta-button" href="tel:+972545418449">לחצו להצעת מחיר</a></p>
+<p><a class="cta-button" href="tel:+97235560638">לחצו להצעת מחיר</a></p>
 <div class="footer-note">KEY4ME המנעולן שלך בכל מקום ובכל זמן</div>
 </div>
 </div>
