@@ -33,5 +33,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           local-dir: ./dist/
-          server-dir: ${{ secrets.FTP_SERVER_DIR || '/public_html/' }}
-          log-level: verbose
+          # The Hostinger FTP account is already rooted at public_html, so upload
+          # to the FTP root ("./"), NOT "/public_html/" (which nests one level deep).
+          server-dir: ${{ secrets.FTP_SERVER_DIR || './' }}
